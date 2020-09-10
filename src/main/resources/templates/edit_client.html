@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<title>Edit Employee</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+        
+
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/employees}">Employees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/products}">Products</a>
+                    </li>
+					<li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/clients}">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/about}">About</a>
+                    </li>
+                </ul>
+
+                <form class="form-inline">
+                    <ul class="navbar-nav mr-auto">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <span
+								sec:authentication="principal.username"> User</span>
+						</a>
+						
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="#">Profile</a> 
+								<a class="dropdown-item" href="#">Some action</a>
+								<a class="dropdown-item" href="#">Some action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Settings</a>
+								<a class="dropdown-item" href="#" th:href="@{/logout}">Logout</a>
+							</div>
+						</li>
+                    </ul>
+                </form>
+
+
+            </div>
+        </div>
+    </nav>
+
+	<br>
+	<br>
+	<br>
+	
+	<div class="container">
+		<div align="center">
+			<h1>Edit Product</h1>
+			<br><br><br>
+  			<div class="bd-example">
+  				<form th:action="@{/clients/save}" method="post" th:object="${client}">
+            		<table class="table table-hover">
+               			<tbody>
+                   			<tr>
+                    			<td>Id:</td>
+                  	  			<td><input class="form-control col-9" type="text" th:field="*{id}" placeholder="From 1 to 999" maxlength="3" readonly/></td>
+                  	 			<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}" >Id Error</td>
+                    		</tr>
+                    		<tr>
+                    			<td>Client Name:</td>
+                    			<td><input class="form-control col-9" type="text" th:field="*{clientName}" placeholder="John" maxlength="15"/></td>
+                   				<td th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" >Name Error</td>
+                   			</tr>
+                    		<tr>
+                    			<td>Company Name:</td>
+                    			<td><input class="form-control col-9" type="text" th:field="*{companyName}" placeholder="Doe" maxlength="15"/></td>
+                    			<td th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" >Brand Error</td>
+                   			</tr>                 			
+                    		<tr>
+                    			<td>Email:</td>
+                    			<td><input class="form-control col-9" type="text" th:field="*{email}" placeholder="johndoe@gmail.com" maxlength="35"/></td>
+                   	 			<td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" >Made in Error</td>
+             		        </tr>
+                    		<tr>
+                    			<td>Phone Number:</td>
+                    			<td><input class="form-control col-9" type="tel" th:field="*{phone}" placeholder="438-759-5429" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="15"/></td>
+                    			<td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" >Brand Error</td>
+                   			</tr>               		                   		        
+                    		<tr>
+                   	 			<td>Sales:</td>
+ 		                  	 	<td><input class="form-control col-9" type="text" th:field="*{sales}" placeholder="$94,000" maxlength="10"/></td>
+ 		                  	 	<td th:if="${#fields.hasErrors('sales')}" th:errors="*{sales}" >Price Error</td>
+  		                  	</tr>
+  		                  	<tr>
+<!--                    	 			<td>Representative:</td>
+ 		                  	 	<td><input class="form-control col-5" type="text" th:field="*{employee}" placeholder="Representative ID" maxlength="10"/></td>
+ 		                  	 	<td th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}" >Price Error</td> -->
+ 		                  	 	
+                    			<td>Representative:</td>
+                    			<td>	
+                    				<select class="col-9 custom-select" th:field="*{employee}">
+                    					<option th:value="''">Select...</option>
+                    					<option th:each="employee : ${listEmployees}" th:value="${employee.id}" th:text="${employee.toString()}"></option>
+									</select>
+								</td> 		
+  		                  	</tr>
+  		              	</tbody>
+ 			         </table>
+      		         <div class="bd-example" align="left">
+							<button type="submit" class="btn btn-success">Confirm</button>
+							<button type="button" class="btn btn-danger" onclick="window.location.href = '../'">Cancel</button>
+					 </div>
+				</form>
+   		  	</div>
+ 		</div>
+	</div>	
+
+	
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+</body>
+</html>

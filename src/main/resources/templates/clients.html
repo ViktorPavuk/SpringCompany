@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<title>Clients</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+ integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+        
+
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/employees}">Employees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/products}">Products</a>
+                    </li>
+					<li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/clients}">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/about}">About</a>
+                    </li>
+                </ul>
+
+                <form class="form-inline">
+                    <ul class="navbar-nav mr-auto">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+							role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"> <span
+								sec:authentication="principal.username"> User</span>
+						</a>
+						
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="#">Profile</a> 
+								<a class="dropdown-item" href="#">Some action</a>
+								<a class="dropdown-item" href="#">Some action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Settings</a>
+								<a class="dropdown-item" href="#" th:href="@{/logout}">Logout</a>
+							</div>
+						</li>
+                    </ul>
+                </form>
+
+
+            </div>
+        </div>
+    </nav>
+
+	<br>
+	<br>
+	<br>
+	
+	<div align="center">
+    <h1>Client List</h1>
+	
+
+    <br/><br/>
+        <div class="container">
+        	<div class="bd-example" align="left">
+            	<a class="btn btn-primary btn-success" role="button" href="/clients/new" >Add Client</a>
+      		 </div> <br>
+      		 
+   
+        <div class="bd-example">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"> <a href="/clients/list" target="_blank">Id</a></th>
+                        <th scope="col">Client Name</th>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Sales</th>
+                        <th scope="col">Representative</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="client : ${listClients}">
+                        <td> <a role="button" th:href="@{/clients/{id}(id=${client.id})}" th:text="${client.id}" target="_blank"> Client Id </a> </td>
+                        <td th:text="${client.clientName}">Client Name</td>
+                        <td th:text="${client.companyName}">Company Name</td>
+                        <td th:text="${client.email}">Email</td>
+                        <td th:text="${client.phone}">Phone</td>
+                        <td th:text="${client.toString()}">Sales</td>
+                        <td> <a role="button" th:if="${client.getEmployee() != null}" th:href="@{/employees/{id}(id=${client.employee.id})}" th:text="${client.getEmployee()}" target="_blank"> Representative </a> </td>
+                        <td><div class="bd-example">
+                            <a class="btn btn-primary btn-sm" role="button" th:href="@{/clients/edit/{id}(id=${client.id})}" >edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-primary btn-sm" role="button" th:href="@{/clients/delete/{id}(id=${client.id})}" onclick="return (confirm('Are you sure you want to delete?'))">delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> 
+</div> 
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+</body>
+</html>

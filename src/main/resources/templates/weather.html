@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<title>Weather</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+
+
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/employees}">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/products}">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/about}">About</a>
+                    </li>
+                </ul>
+
+                <form class="form-inline">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" style="pointer-events:none" href="#"><span sec:authentication="principal.username"> User</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </form>
+
+
+            </div>
+        </div>
+    </nav>
+
+	<br>
+	<br>
+	<br>
+
+	
+	<div align="center">
+    <h2>Welcome to Little Dance Company!</h2>
+
+		
+
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th><a href="/products/list" style="text-decoration:none" target="_blank">Product Id</a></th>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Made In</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${listProducts}">
+            	<td th:text="${product.id}"> Product Id </td>
+                <td th:text="${product.name}">Name</td>
+                <td th:text="${product.brand}">Brand</td>
+                <td th:text="${product.madein}">Made in</td>
+                <td th:text="${product.toString()}">Price</td>
+                <td>
+                 	<a th:href="@{/products/{id}(id=${product.id})}" style="text-decoration:none" target="_blank"><button>json</button></a> 
+                 		 &nbsp;&nbsp;&nbsp;
+        			<a th:href="@{/edit/{id}(id=${product.id})}"><button>Edit</button></a>
+       				 &nbsp;&nbsp;&nbsp;
+       				<a th:href="@{/delete/{id}(id=${product.id})}" onclick="return (confirm('Are you sure you want to delete?'))"><button>Delete</button></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+ 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+<footer>
+ 	<nav class="navbar-fixed-bottom" style ="position: absolute; bottom: 30px">
+ 		<div class="container">
+			<h2 th:text="${uselessFact}"></h2>
+			<span>Get me another <a href="#" th:href="@{/}">useless fact</a></span>
+		</div>
+<!-- 		<nav class="navbar navbar-inverse" style ="border-radius: 0px; height: 130px"></nav> -->
+   </nav>
+   
+</footer>
+
+</html>
